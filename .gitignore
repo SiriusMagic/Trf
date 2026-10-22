@@ -1,0 +1,8 @@
+__pycache__/
+.pytest_cache/
+.venv/
+.env
+results/*.png
+results/*.stl
+results/*.json
+data/experiments.jsonl
