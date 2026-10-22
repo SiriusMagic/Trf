@@ -1,56 +1,49 @@
-# ATLAS-RF — laboratorio científico de antenas
+# Atlas RF v2 — laboratorio de RF y antenas
 
-ATLAS-RF es un proyecto reproducible para estudiar antenas de radiofrecuencia, comenzando con un parche microstrip rectangular y ampliándose posteriormente a arrays, mapas de campo, análisis espectral y optimización.
+Prototipo científico reproducible para estudiar estimaciones iniciales de parches microstrip y factores de arreglo, con dashboard interactivo, barrido exploratorio de espaciado, registro JSON y exportación de geometría conceptual.
 
-## Estado científico
-
-- **Frecuencia de referencia:** 5.00 GHz provisional; debe confirmarse.
-- **Geometría:** parche rectangular microstrip.
-- **Sustrato inicial:** Rogers RO4350B, permitividad relativa nominal aproximada 3.48.
-- **Espesor dieléctrico:** 0.762 mm.
-- **Cobre:** 35 µm provisional.
-- **Puerto de referencia:** 50 ohmios.
-- **Dirección frontal de visualización:** +Y.
-- **Elementos:** 1.
-
-> Este prototipo calcula estimaciones analíticas y visualizaciones ilustrativas. No es un solucionador electromagnético completo, no predice con precisión S11 ni eficiencia, y no debe usarse como única base para fabricar. La compatibilidad con Starlink no está establecida: primero hay que identificar el modelo de terminal y sus bandas de operación.
-
-## Instalación
+## Inicio rápido
 
 Requiere Python 3.10 o superior.
 
 ```bash
-python -m venv .venv
-# Linux/macOS:
-source .venv/bin/activate
-# Windows PowerShell:
-# .venv\\Scripts\\Activate.ps1
-
 pip install -r requirements.txt
+streamlit run src/atlas_rf/dashboard.py
+```
+
+Para ejecutar pruebas:
+
+```bash
+pytest -q
+```
+
+Para generar gráficos ilustrativos desde la configuración:
+
+```bash
 python -m src.atlas_rf --config config/default.json
 ```
 
-Los gráficos se guardan en `results/`.
-
 ## Estructura
 
-- `config/default.json`: parámetros editables.
-- `src/atlas_rf/`: ecuaciones y visualizaciones.
-- `tests/`: pruebas unitarias de los cálculos.
-- `docs/EQUATIONS.md`: ecuaciones, supuestos y límites.
+- `src/atlas_rf/model.py`: estimación de parche, factor de arreglo y barrido de espaciado.
+- `src/atlas_rf/dashboard.py`: dashboard Streamlit.
+- `src/atlas_rf/export_geometry.py`: exportación JSON y STL conceptual.
+- `src/atlas_rf/plots.py`: gráficos ilustrativos.
+- `config/default.json`: parámetros y perfiles iniciales.
+- `docs/EQUATIONS.md`: ecuaciones y límites.
 - `docs/VALIDATION_PLAN.md`: plan de validación.
-- `results/`: salidas generadas localmente; no contiene mediciones de fábrica.
+- `tests/test_model.py`: pruebas unitarias.
 
-## Roadmap
+## Límites científicos
 
-1. Confirmar frecuencia objetivo y datos de fabricación.
-2. Validar cálculo inicial del parche.
-3. Incorporar simulación EM externa (por ejemplo, openEMS o un solucionador comercial).
-4. Añadir curvas S11/VSWR solo a partir de simulación EM o mediciones.
-5. Extender a arrays y fase/amplitud por elemento.
-6. Añadir optimización con límites físicos y métricas de validación.
-7. Comparar predicciones con VNA y mediciones de patrón, cuando haya equipo disponible.
+Este proyecto **no es un solver electromagnético de onda completa**. No calcula S11, impedancia real, ganancia realizada, eficiencia, acoplamiento mutuo, red de alimentación ni campos electromagnéticos medidos. Las métricas no disponibles se dejan como `null`; no se inventan valores.
 
-## Licencia
+Las dimensiones del parche son estimaciones de primer orden. El STL es una envolvente conceptual, no un diseño validado para fabricar. La compatibilidad con Starlink no está demostrada: confirma el modelo exacto del terminal, las bandas, la polarización y la normativa local antes de cualquier diseño físico. No transmitas sin un sistema RF completo, validación y autorización aplicable.
 
-Por decidir antes de publicar el repositorio.
+## Ruta de validación
+
+1. Verificar las estimaciones analíticas y las pruebas.
+2. Validar un elemento con un solver electromagnético full-wave y/o un VNA.
+3. Modelar alimentación, pérdidas, polarización y acoplamiento mutuo.
+4. Comparar simulaciones con mediciones documentadas.
+5. Entrenar un modelo sustituto solo con datos de solver o mediciones trazables; este repositorio no contiene un modelo ML entrenado.
