@@ -1,0 +1,17 @@
+{
+  "frequency_hz": 5000000000,
+  "substrate": {
+    "name": "Rogers RO4350B",
+    "relative_permittivity_nominal": 3.48,
+    "thickness_m": 0.000762,
+    "copper_thickness_m": 3.5e-05
+  },
+  "feed_impedance_ohm": 50.0,
+  "elements": 1,
+  "front_axis": "+Y",
+  "patch": {
+    "width_m": null,
+    "length_m": null
+  },
+  "notes": "5 GHz is provisional. Recalculate dimensions after frequency confirmation."
+}
