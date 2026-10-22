@@ -1,0 +1,82 @@
+{
+  "project_name": "Atlas RF",
+  "target": "starlink_user_terminal_link",
+  "operation": [
+    "receive",
+    "transmit"
+  ],
+  "selected_profile": "starlink_ku_user_link",
+  "profiles": {
+    "wifi5": {
+      "name": "Wi-Fi 5 / 5 GHz terrestrial",
+      "frequency_range_hz": [
+        5150000000,
+        5850000000
+      ],
+      "status": "separate_research_profile_not_starlink"
+    },
+    "wifi6e": {
+      "name": "Wi-Fi 6E / 6 GHz terrestrial",
+      "frequency_range_hz": [
+        5925000000,
+        7125000000
+      ],
+      "status": "separate_research_profile_not_starlink"
+    },
+    "starlink_ku_user_link": {
+      "name": "Starlink Ku user link (preliminary reference only)",
+      "receive_frequency_range_hz": [
+        10700000000,
+        12700000000
+      ],
+      "receive_center_frequency_hz": 11700000000,
+      "transmit_frequency_range_hz": [
+        14000000000,
+        14500000000
+      ],
+      "transmit_center_frequency_hz": 14250000000,
+      "note": "Verify the exact terminal generation, regional authorizations, polarization, and channel plan before engineering or fabrication."
+    }
+  },
+  "element_model": {
+    "geometry": "rectangular_microstrip_patch_placeholder",
+    "substrate": {
+      "name": "Rogers RO4350B",
+      "relative_permittivity_nominal": 3.48,
+      "thickness_m": 0.000762,
+      "copper_thickness_m": 0.000035
+    },
+    "feed_impedance_ohm": 50,
+    "polarization_target": "circular_to_be_confirmed",
+    "notes": "Analytical patch estimate is a placeholder, not a validated Starlink-compatible element. Full-wave EM validation is required."
+  },
+  "array": {
+    "rows": 4,
+    "columns": 4,
+    "elements": 16,
+    "front_axis": "+Y",
+    "coordinate_system": "x-z plane, broadside along +Y",
+    "spacing_mode": "fixed_physical_spacing",
+    "spacing_reference_frequency_hz": 14250000000,
+    "spacing_wavelength_fraction": 0.5,
+    "spacing_m_initial": 0.010519,
+    "amplitude_weights": "uniform_initial",
+    "phase_weights": "broadside_initial",
+    "mutual_coupling": "not_modelled_in_analytical_array_factor",
+    "element_results_must_be_saved_individually": true
+  },
+  "simulation": {
+    "receive_frequency_hz": 11700000000,
+    "transmit_frequency_hz": 14250000000,
+    "feed_impedance_ohm": 50,
+    "front_axis": "+Y",
+    "export_s11_only_from_em_solver_or_measurement": true,
+    "export_gain_efficiency_and_real_fields_only_from_em_solver_or_measurement": true
+  },
+  "notes": [
+    "Wi-Fi profiles are terrestrial research bands, not Starlink user-link bands.",
+    "Starlink frequency ranges vary by link, generation, region, and authorization; confirm the exact terminal before final design.",
+    "The initial 4x4 array is a simulation study only, not a substitute for an approved terminal or RF front end.",
+    "Do not transmit until the complete radio system, power limits, spectrum authorization, and regulatory compliance are established."
+  ]
+}
